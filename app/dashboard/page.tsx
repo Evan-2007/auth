@@ -199,13 +199,12 @@ export default function Page(){
 
 
 
-            <Card className="w-10/12 justify-center h-4/6 mt-16">
+            <Card className="w-10/12 justify-center h-4/6 mt-16 mb-24">
                 <CardHeader>
                     <h1 className='text-3xl'>Authorized Applications</h1>
                 </CardHeader>
                 <CardContent className="ml-10">
                     <div className='mt-8 text-xl'>
-                        <h1>Active Sessions</h1>
                         <div className='flex flex-col'>
                             {accounts.map((account, index) => (
                                 <Card key={index} className="flex items-center gap-4 mt-4 bg-background mr-10">
