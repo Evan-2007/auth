@@ -15,7 +15,7 @@ interface otpProps {
 
 export function OtpInput (props: otpProps) {
 
-    const [value, setValue] = useState<number>()
+    const [value, setValue] = useState('')
 	const [otpLoading, setOtpLoading] = useState(false)
 	const [invalidOtp, setInvalidOtp] = useState(false)
 
