@@ -15,15 +15,35 @@ datasource db {
 
 
 model User {
-  id       String    @id
-  sessions Session[]
-  username String   @unique
-  hashed_password String
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  image    String?
+  permissions String[]
+  status    Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Apps      App[]   @relation("authApps")
+  Session   Session[]
+  ownedApps App[]
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(cuid())
   userId    String
-  expiresAt DateTime
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  token     String
+  expires   DateTime
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model App {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ownerId   String
+  User      User[] @relation("authApps")
+  owner     User     @relation(fields: [ownerId], references: [id])
 }
