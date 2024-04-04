@@ -1,7 +1,5 @@
-export function Menu(){
-    return (
-        <div className="fixed h-screen w-64 bg-card border-r border-border">
-
-        </div>
-    )
+export function Menu() {
+  return (
+    <div className='fixed top-0 z-10 h-screen w-64 border-r border-border bg-card'></div>
+  );
 }
