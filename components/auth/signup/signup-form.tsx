@@ -46,6 +46,9 @@ export function Signup() {
         <CardContent>
           <SignupForm />
         </CardContent>
+        <CardFooter>
+            Already have an account? <a href='/auth/login' className='text-blue-500'><Button variant='link' className='text-normal'>Login</Button></a>
+          </CardFooter>
       </Card>
     );
 }

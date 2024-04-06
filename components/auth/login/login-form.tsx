@@ -26,6 +26,7 @@ import githubDark from '@/assets/oauth/github-mark.svg'
 import google from '@/assets/oauth/icons8-google.svg'
 import githubLight from '@/assets/oauth/github-mark-white.svg'
 import Image from 'next/image'
+import { Button } from '@/components/ui/button';
 
 type OauthProviders = ("google" | "github")[];
 export function Login() {
@@ -33,12 +34,15 @@ export function Login() {
     return ( 
         <Card className='w-[350px]'>
         <CardHeader className='flex flex-row align-middle items-center justify-between'>
-          <h1 className='text-2xl'>Sign Up</h1>
+          <h1 className='text-2xl'>Login</h1>
           <ModeToggle />
         </CardHeader>
         <CardContent>
           <LoginForm />
         </CardContent>
+        <CardFooter>
+            Don't have an account? <a href='/auth/signup' className='text-blue-500'><Button variant='link' className='text-normal'>Sign Up</Button></a>
+          </CardFooter>
       </Card>
     );
 }
@@ -92,17 +96,17 @@ function LoginForm() {
           render={({ field }) => <FormInput field={field} name="Password" type="password" />}
         />
         <div>
-          <SubmitButton type='submit' className="mt-4">Log In</SubmitButton>
+          <SubmitButton type='submit' className="mt-4">Login</SubmitButton>
         </div>
         {OauthAvailable.includes("google") && (
             <div className='flex justify-center w-full'>
-            <SubmitButton variant='secondary' className=' w-full'><Image src={github} height={24} width={24} alt='google Logo' className='mr-2'/><p>Log in with Github</p></SubmitButton>
+            <SubmitButton variant='secondary' className=' w-full'><Image src={github} height={24} width={24} alt='google Logo' className='mr-2'/><p>Login with Github</p></SubmitButton>
             </div>
           )
         }
         {OauthAvailable.includes("github") && (
           <div className='flex justify-center w-full'>
-          <SubmitButton variant='secondary' className=' w-full '><Image src={google} height={24} width={24} alt='google Logo' className='mr-2'/><p>Log in with Google</p></SubmitButton>
+          <SubmitButton variant='secondary' className=' w-full '><Image src={google} height={24} width={24} alt='google Logo' className='mr-2'/><p>Login with Google</p></SubmitButton>
           </div>
         )}
       </form>

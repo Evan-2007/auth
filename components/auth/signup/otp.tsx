@@ -13,6 +13,7 @@ import {
   InputOTPSlot,
 } from '@/components/ui/input-otp';
 import { TriangleAlert, Loader2, Loader } from 'lucide-react';
+import { Button } from "@/components/ui/button"
 
 interface otpProps {
   onVerify: (valid: boolean) => void;
@@ -77,7 +78,7 @@ export function OtpInput(props: otpProps) {
                 <InputOTPSlot index={5} />
               </InputOTPGroup>
             </InputOTP>
-            <CardFooter className='mt-6 justify-center'>
+            <CardFooter className='mt-6 justify-center flex flex-col'>
               {otpLoading && (
                 <div className='flex h-10 w-72 items-center justify-center rounded  align-middle'>
                   <Loader2 size={30} className='animate-spin text-green-500 ' />
@@ -91,8 +92,19 @@ export function OtpInput(props: otpProps) {
                   </p>
                 </div>
               )}
+              <div className='flex flex-col justify-center text-center'>
+                  <p className='mt-5'>
+                  Please request an invite form an admin if you do not have a code.
+                </p>
+                  <div className='mt-3'>
+                    Already have an account? <a href='/auth/login' className='text-blue-500'><Button variant='link' className='text-normal'>Login</Button></a>
+                  </div>
+              </div>
             </CardFooter>
           </CardContent>
+          <CardFooter className='flex justify-center text-center'>
+
+          </CardFooter>
         </Card>
       </div>
     </div>
