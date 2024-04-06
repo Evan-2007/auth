@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { OtpInput } from '@/components/signup/otp';
+import { OtpInput } from '@/components/auth/signup/otp';
 import { Signup } from '@/components/auth/signup/signup-form';
 
 

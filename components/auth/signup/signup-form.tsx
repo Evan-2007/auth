@@ -13,7 +13,6 @@ import {
     InputOTPSlot,
 } from '@/components/ui/input-otp';
 import { TriangleAlert, Loader2, Loader } from 'lucide-react';
-import { OtpInput } from '@/components/signup/otp';
 import { Button } from "@/components/ui/button"
 import {
     Form,
