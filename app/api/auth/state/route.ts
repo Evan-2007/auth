@@ -1,4 +1,17 @@
-export function GET() {
+import { getSession } from '@/lib/auth/session';
+import { NextRequest } from 'next/server';
+
+export async function GET(req: NextRequest) {
+    const session = await getSession(req);
+    if (session.error) {
+        return new Response(session.error, { status: 401 });
+    }
+    return new Response(JSON.stringify(session), { status: 200 });
+} 
+
+
+
+export function POST() {
     return new Response(
         JSON.stringify({
             status: 200,
