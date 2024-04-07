@@ -17,33 +17,79 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
-  name      String?
+  name      String    @unique
   password  String
   image    String?
-  permissions String[]
   status    Boolean @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Apps      App[]   @relation("authApps")
+  isAdmin  Boolean @default(false)
   Session   Session[]
-  ownedApps App[]
+  allowedApps App[]
+  invites   invite[]
+  groups    group[]
+  permissions permission[]
+  rules     rule[]
 }
 
 model Session {
-  id        String   @id @default(cuid())
-  userId    String
+  id        String   @id
+  userName    String
   token     String
   expires   DateTime
   createdAt DateTime @default(now())
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userName], references: [name])
 }
 
 model App {
   id        String   @id @default(cuid())
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ownerId   String
-  User      User[] @relation("authApps")
-  owner     User     @relation(fields: [ownerId], references: [id])
+  port      Int
+  url       String
+  forceHttps Boolean @default(false)
+  certPath  String?
+  keyPath   String?
+  user      User[]
+  permissions permission[]
+  rules     rule[]
+}
+
+model invite {
+  id        String   @id @default(cuid())
+  code      Int   @unique
+  permissions permission[]
+  groups group[]
+  user      User[]
+}
+
+model permission {
+  id        String   @id @default(cuid())
+  name      String
+  description String
+  apps      App[]
+  invites   invite[]
+  users     User[]
+  groups    group[]
+}
+
+model group {
+  id        String   @id @default(cuid())
+  name      String
+  description String
+  users     User[]
+  invites   invite[]
+  permissions permission[]
+  rules    rule[]
+}
+
+model rule {
+  id        String   @id @default(cuid())
+  name      String
+  description String?
+  appId     String
+  type      String
+  path      String
+  App       App      @relation(fields: [appId], references: [id])
+  user      User[]
+  group     group[]
 }
