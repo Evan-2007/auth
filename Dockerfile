@@ -39,7 +39,7 @@ RUN \
 
 # Production image, copy all the files and run next
 FROM base AS runner
-RUN apk add nano bash
+RUN apk add nano bash dos2unix
 WORKDIR /app
 
 ENV NODE_ENV production
@@ -61,6 +61,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 COPY scripts /app/scripts
+
+RUN dos2unix /app/scripts/init.sh
 
 
 EXPOSE 3000
