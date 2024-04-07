@@ -175,7 +175,12 @@ export async function getSession(req: NextRequest): Promise<GetSession> {
             return { error: 'Session expired' };
         }
 
-        const hashMatch = bcrypt.compareSync(token, session.token);
+        let hashMatch = false;
+        if ( typeof token !== 'undefined') {
+            hashMatch = await bcrypt.compareSync(token, session.token);
+        } else {
+            return { error: 'Invalid token' };
+        }
 
         if (!hashMatch) {
             return { error: 'Invalid token' };
