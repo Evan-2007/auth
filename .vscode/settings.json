@@ -16,5 +16,27 @@
       "command": "extension.execute",
       "priority": 4
     }
+  ],
+  "restoreTerminals.terminals": [
+    {
+      "splitTerminals": [
+        {
+          "name": "dev",
+          "commands": ["pnpm i", "pnpm run dev"]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "dockerBuild",
+          "commands": ["docker-compose up --build"]
+        },
+        {
+          "name": "dockerDb",
+          "commands": ["docker-compose -f docker-compose.db.yaml up"]
+        }
+      ]
+    }
   ]
 }

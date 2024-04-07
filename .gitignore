@@ -39,3 +39,8 @@ next-env.d.ts
 
 # docker config folder
 /config
+
+#ide
+.idea
+.vscode
+.vscode/settings.json
