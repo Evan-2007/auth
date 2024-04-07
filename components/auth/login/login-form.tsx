@@ -41,7 +41,7 @@ export function Login() {
           <LoginForm />
         </CardContent>
         <CardFooter>
-            <p>Don&apost have an account?</p><a href='/auth/signup' className='text-blue-500'><Button variant='link' className='text-normal'>Sign Up</Button></a>
+            <p>Don{"'"}t have an account?</p><a href='/auth/signup' className='text-blue-500'><Button variant='link' className='text-normal'>Sign Up</Button></a>
           </CardFooter>
       </Card>
     );
