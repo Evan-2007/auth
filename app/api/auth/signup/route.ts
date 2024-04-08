@@ -46,8 +46,8 @@ export async function POST(req: NextRequest) {
         
         }
 
-        permissions = validOtp.permissions.map((perm: permissions) => perm.id);
-        groups = validOtp.groups.map((group) => group.id);
+        permissions = validOtp.permissions.map((perm: any) => perm.id);
+        groups = validOtp.groups.map((group: any) => group.id);
     } catch (e) {
         return new Response("Error checking OTP", { status: 500 });
     }
