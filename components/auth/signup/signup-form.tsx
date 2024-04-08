@@ -143,13 +143,13 @@ function SignupForm() {
         <div className='flex justify-center w-full'>
         <SubmitButton type="submit" className='mt-4 w-full' error={errors} loading={waiting}>Create Account</SubmitButton>
         </div>
-          {OauthAvailable.includes("google") && (
+          {OauthAvailable.includes("github") && (
             <div className='flex justify-center w-full'>
-            <SubmitButton variant='secondary' className=' w-full'><Image src={github} height={24} width={24} alt='google Logo' className='mr-2'/><p>Sign Up with Github</p></SubmitButton>
+              <SubmitButton variant='secondary' className=' w-full'><Image src={githubLight} height={24} width={24} alt='google Logo' className='mr-2 dark:scale-100 scale-0 absolute dark:relative'/><Image src={githubDark} height={24} width={24} alt='google Logo' className='mr-2 visible dark:hidden'/><p>Sign Up with Github</p></SubmitButton>
             </div>
           )
         }
-        {OauthAvailable.includes("github") && (
+        {OauthAvailable.includes("google") && (
           <div className='flex justify-center w-full'>
           <SubmitButton variant='secondary' className=' w-full'><Image src={google} height={24} width={24} alt='google Logo' className='mr-2'/><p>Sign Up with Google</p></SubmitButton>
           </div>

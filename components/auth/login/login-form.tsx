@@ -100,7 +100,7 @@ function LoginForm() {
         </div>
         {OauthAvailable.includes("google") && (
             <div className='flex justify-center w-full'>
-            <SubmitButton variant='secondary' className=' w-full'><Image src={github} height={24} width={24} alt='google Logo' className='mr-2'/><p>Login with Github</p></SubmitButton>
+            <SubmitButton variant='secondary' className=' w-full'><Image src={githubLight} height={24} width={24} alt='google Logo' className='mr-2 dark:scale-100 scale-0 absolute dark:relative'/><Image src={githubDark} height={24} width={24} alt='google Logo' className='mr-2 visible dark:hidden'/><p>Login with Github</p></SubmitButton>
             </div>
           )
         }
