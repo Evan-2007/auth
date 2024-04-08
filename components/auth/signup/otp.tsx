@@ -14,24 +14,27 @@ import {
 } from '@/components/ui/input-otp';
 import { TriangleAlert, Loader2, Loader } from 'lucide-react';
 import { Button } from "@/components/ui/button"
+import { ESLINT_PROMPT_VALUES } from 'next/dist/lib/constants';
 
 interface otpProps {
   onVerify: (valid: boolean) => void;
+  setValue: (value: string) => void;
+  value: string;
 }
 
 export function OtpInput(props: otpProps) {
-  const [value, setValue] = useState('');
+
   const [otpLoading, setOtpLoading] = useState(false);
   const [invalidOtp, setInvalidOtp] = useState(false);
 
   useEffect(() => {
     async function validateOtp() {
       setInvalidOtp(false);
-      if (value?.toString().length === 6) {
+      if (props.value?.toString().length === 6) {
         setOtpLoading(true);
         const response = await fetch('/api/verify-otp', {
           method: 'POST',
-          body: JSON.stringify({ otp: value }),
+          body: JSON.stringify({ otp: props.value }),
           headers: {
             'Content-Type': 'application/json',
           },
@@ -50,7 +53,7 @@ export function OtpInput(props: otpProps) {
       }
     }
     validateOtp();
-  }, [value, props]);
+  }, [props.value, props]);
 
   return (
     <div className='h-screen w-screen'>
@@ -63,8 +66,8 @@ export function OtpInput(props: otpProps) {
           <CardContent className='justify-center'>
             <InputOTP
               maxLength={6}
-              value={value}
-              onChange={(value) => setValue(value)}
+              value={props.value}
+              onChange={(value) => props.setValue(value)}
             >
               <InputOTPGroup>
                 <InputOTPSlot index={0} />

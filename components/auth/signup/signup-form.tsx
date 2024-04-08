@@ -36,7 +36,7 @@ import Image from 'next/image'
 import { SubmitButton } from '@/components/auth/submit-button';
 
 
-export function Signup() {
+export function Signup(otp: string | null = null) {
     return ( 
         <Card className='w-[350px]'>
         <CardHeader className='flex flex-row align-middle items-center justify-between'>
@@ -44,7 +44,7 @@ export function Signup() {
           <ModeToggle />
         </CardHeader>
         <CardContent>
-          <SignupForm />
+          <SignupForm otp={otp} />
         </CardContent>
         <CardFooter>
             Already have an account? <a href='/auth/login' className='text-blue-500'><Button variant='link' className='text-normal'>Login</Button></a>
@@ -70,7 +70,7 @@ const schema = z.object({
 
 
 type OauthProviders = ("google" | "github")[];
-function SignupForm() {
+function SignupForm(otp: string | null = null) {
   const { theme } = useTheme();
   const github = theme === 'dark' ? githubLight : githubDark; 
 
