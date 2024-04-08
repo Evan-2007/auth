@@ -43,8 +43,10 @@ export async function POST(req: NextRequest) {
         });
         if (validOtp === null) {
             return new Response("Invalid OTP", { status: 400 });
+        
         }
-        permissions = validOtp.permissions.map((perm) => perm.id);
+
+        permissions = validOtp.permissions.map((perm: permissions) => perm.id);
         groups = validOtp.groups.map((group) => group.id);
     } catch (e) {
         return new Response("Error checking OTP", { status: 500 });
