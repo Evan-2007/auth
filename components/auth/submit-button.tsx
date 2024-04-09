@@ -11,6 +11,7 @@ interface submitButtonProps {
     variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | "white" | null | undefined;
     serverError?: string;
     error?: boolean;
+    errorMessage?: string;
 }
 export function SubmitButton(props: submitButtonProps) {
     if (props.loading) {
@@ -51,10 +52,10 @@ export function SubmitButton(props: submitButtonProps) {
             onClick={props.onClick}
             className={cn("w-full", props.className)}
             variant='destructive'
-            disabled
+
         >
             <p className="">
-            {props.error}
+            {props.errorMessage}
             </p>
         </Button>
         );

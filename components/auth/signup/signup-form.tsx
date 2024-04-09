@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useForm, UseFormSetError } from "react-hook-form"
 import { z } from "zod"
 import { toast } from "@/components/ui/use-toast"
 import { useTheme } from 'next-themes'
@@ -34,6 +34,7 @@ import google from '@/assets/oauth/icons8-google.svg'
 import githubLight from '@/assets/oauth/github-mark-white.svg'
 import Image from 'next/image'
 import { SubmitButton } from '@/components/auth/submit-button';
+import { useRouter } from 'next/navigation';
 
 
 export function Signup({ otp }: { otp: string }) {
@@ -72,10 +73,11 @@ const schema = z.object({
 type OauthProviders = ("google" | "github")[];
 function SignupForm(props: { otp: string }) {
   const { theme } = useTheme();
-  const github = theme === 'dark' ? githubLight : githubDark; 
+  const router = useRouter();
 
   const [OauthAvailable, setOauthAvailable] = useState<OauthProviders>([]);
   const [errors, setErrors] = useState(false);
+  const [errorMessage , setErrorMessage] = useState<string | undefined>(undefined);
   const [waiting, setWaiting] = useState(false);
 
   useEffect(() => {
@@ -93,12 +95,42 @@ function SignupForm(props: { otp: string }) {
       email: "",
       password: "",
       confirmPassword: "",
-    },
+    }
   });
 
-  function onSubmit(data: z.infer<typeof schema>) {
+  async function onSubmit(data: z.infer<typeof schema>) {
     console.log(data);
     setWaiting(true);
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...data, otp: Number(props.otp) })
+      });
+      if (res.status !== 200) {
+        setErrors(true);
+        setWaiting(false);
+        if (res.body === null || res.body === undefined)
+          setErrorMessage("An error occured. Please try again later.");
+        else
+          setErrorMessage(await res.text());
+        return;
+      }
+      const resData = await res.json();
+      setWaiting(false);
+      if (res.ok) {
+        router.push('/auth/login');
+      } else {
+        setErrorMessage(resData.message);
+        setErrors(true);
+      }
+    } catch (err) {
+      setErrors(true);
+      setWaiting(false);
+      setErrorMessage("An error occured. Please try again later.");
+    }
   }
 
   return (
@@ -141,7 +173,7 @@ function SignupForm(props: { otp: string }) {
           }}
         />
         <div className='flex justify-center w-full'>
-        <SubmitButton type="submit" className='mt-4 w-full' error={errors} loading={waiting}>Create Account</SubmitButton>
+        <SubmitButton type="submit" className='mt-4 w-full' error={errors} loading={waiting} errorMessage={errorMessage}>Create Account</SubmitButton>
         </div>
           {OauthAvailable.includes("github") && (
             <div className='flex justify-center w-full'>

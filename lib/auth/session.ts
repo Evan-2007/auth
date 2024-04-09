@@ -36,6 +36,7 @@ export async function createSession(username: string): Promise<CreateSession> {
 
 
 interface GetSession {
+    state?: boolean;
     error?: string;
     session?: {
         token?: string;
@@ -168,25 +169,26 @@ export async function getSession(req: NextRequest): Promise<GetSession> {
         });
 
         if (!session?.token) {
-            return { error: 'Session not found' };
+            return { error: 'Session not found', state: false};
         }
 
         if (session.expires < new Date()) {
-            return { error: 'Session expired' };
+            return { error: 'Session expired', state: false};
         }
 
         let hashMatch = false;
         if ( typeof token !== 'undefined') {
             hashMatch = await bcrypt.compareSync(token, session.token);
         } else {
-            return { error: 'Invalid token' };
+            return { error: 'Invalid token', state: false};
         }
 
         if (!hashMatch) {
-            return { error: 'Invalid token' };
+            return { error: 'Invalid token', state: false};
         }
 
         return {
+            state: true,
             session: {
                 token: session.token,
                 expires: session.expires,
@@ -198,6 +200,6 @@ export async function getSession(req: NextRequest): Promise<GetSession> {
             }
         }
     } catch (error: any) {
-        return { error: error.message };
+        return { error: error.message, state: false};
     }
 }

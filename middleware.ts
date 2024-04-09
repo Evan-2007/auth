@@ -1,9 +1,11 @@
 
 import { url } from "inspector";
 import { NextResponse, NextRequest } from "next/server";
-//import getAuth from "@/lib/auth/getAuth";
+import {getSession} from "@/lib/auth/session";
 
 export async function middleware(req: NextRequest) {
+
+   const session = await getSession(req);
    const auth = {
       state: false,
       Permissions: ["user"],
